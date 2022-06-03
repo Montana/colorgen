@@ -37,6 +37,7 @@ const handleSubmit = (e) => {
           type="submit">
             SUBMIT
         </button>
+        <h5>Increment out of 100</h5>
         <input
           type="number"
           defaultValue={20}
