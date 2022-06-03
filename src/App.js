@@ -4,13 +4,15 @@ import Values from 'values.js';
 
 function App() {
   const [color, setColor] = useState('');
+  const [amount, setAmount] = useState(10);
   const [error, setError] = useState(false);
   const [list, setList] = useState(new Values("#34eb34").all(10));
 
-const handleSubmit =(e)=>{
+const handleSubmit = (e) => {
   e.preventDefault()
   try {
-    let colors = new Values(color).all(10)
+    //TODO: I dont know how to math, I need to figure out how to convert amount to a increment value
+    let colors = new Values(color).all(parseInt(amount))
     setList(colors)
   } catch (error) {
     setError(true)
@@ -21,25 +23,38 @@ const handleSubmit =(e)=>{
   return (
   <>
   <section className="container">
-      <h3>Color Generator</h3> 
+      <h3>Color Generator</h3>
       <form onSubmit={handleSubmit}>
-        <input 
-          type="text" 
-          value={color} 
-          onChange={(e)=> setColor(e.target.value)}
+        <input
+          type="text"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
           placeholder="#34eb34"
           className={`${error ? 'error' : null}`}
         />
-        <button 
-          className="btn" 
+        <button
+          className="btn"
           type="submit">
             SUBMIT
         </button>
-      </form>   
+        <input
+          type="number"
+          defaultValue={20}
+          value={amount}
+        onChange={(e) => {
+        if (e.target.value <= 0) {
+        setAmount(1)
+        } else {
+        setAmount(e.target.value)
+        }
+        }}
+        />
+      </form>
   </section>
+
   <section className="colors">
       {list.map((color, index)=>{
-        return <SingleColor 
+        return <SingleColor
           key={index} {...color} 
           index={index}
           hexColor={color.hex}
